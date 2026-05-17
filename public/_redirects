@@ -1,0 +1,27 @@
+# Cloudflare Pages redirect rules.
+# Documentation: https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Two intents:
+#   1. WordPress category permalinks were /category/<slug>/  — we match that.
+#   2. A handful of pages migrate to nicer routes.
+#
+# Format: <source>  <destination>  <status>
+# 301 = permanent (good for SEO). Place specific rules ABOVE catch-alls.
+
+# About page moved from /nin-nin/ to /about/
+/nin-nin                /about/                 301
+/nin-nin/               /about/                 301
+
+# Old novel landing pages -> new /novels/<slug>/
+/audrey                                   /novels/audrey/                       301
+/audrey/                                  /novels/audrey/                       301
+/under-the-cherry-blossoms                /novels/under-the-cherry-blossoms/    301
+/under-the-cherry-blossoms/               /novels/under-the-cherry-blossoms/    301
+/coincidence-or-jeanie                    /novels/coincidence-or-jeanie/        301
+/coincidence-or-jeanie/                   /novels/coincidence-or-jeanie/        301
+/the-infection-part-one-angelas-story     /novels/the-infection/                301
+/the-infection-part-one-angelas-story/    /novels/the-infection/                301
+
+# Old WP category sub-paths used inconsistently
+/category/novels/web-novel/    /category/web-novel/    301
+/category/novels/              /novels/                301

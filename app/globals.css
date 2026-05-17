@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────
+   Theme — soft paper / deep ink, blossom accent
+   ───────────────────────────────────────────────────────── */
+:root {
+  --paper: #f7f2ea;            /* warm off-white */
+  --paper-deep: #efe6d7;       /* card / chip bg */
+  --ink: #1a1614;              /* near-black, warm */
+  --ink-soft: #3a322d;
+  --muted: #7a6f66;
+  --line: #d9cfbf;
+  --accent: #b25861;           /* blossom rose */
+  --accent-soft: #f0c9c5;
+  --chip: rgba(178, 88, 97, 0.08);
+
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-serif:   "EB Garamond", "Cormorant Garamond", Georgia, serif;
+  --font-sans:    "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #14110f;
+  --paper-deep: #1f1a16;
+  --ink: #f5ece0;
+  --ink-soft: #d5c8b8;
+  --muted: #8c8174;
+  --line: #2b2520;
+  --accent: #e8a1a9;
+  --accent-soft: #4b2d31;
+  --chip: rgba(232, 161, 169, 0.10);
+
+  color-scheme: dark;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────── */
+html {
+  background: var(--paper);
+  color: var(--ink);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(1200px 700px at 80% -20%, var(--accent-soft) 0%, transparent 55%),
+    radial-gradient(900px 600px at -10% 110%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 60%),
+    var(--paper);
+  background-attachment: fixed;
+}
+
+/* Paper grain — subtle */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='1'/></svg>");
+}
+
+.dark body::before {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Typography utilities
+   ───────────────────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "WONK" 0, "opsz" 96;
+  letter-spacing: -0.02em;
+}
+
+.font-serif-body {
+  font-family: var(--font-serif);
+  font-feature-settings: "kern", "liga", "onum";
+}
+
+.headline-balance {
+  text-wrap: balance;
+}
+
+/* Editorial drop-cap for the first paragraph of articles */
+.prose-imitatia > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 4.5rem;
+  line-height: 0.85;
+  float: left;
+  margin: 0.25rem 0.5rem 0 0;
+  color: var(--accent);
+  font-feature-settings: "ss01";
+}
+
+/* ─────────────────────────────────────────────────────────
+   Article prose — long-form reading
+   ───────────────────────────────────────────────────────── */
+.prose-imitatia {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.prose-imitatia p {
+  margin: 1.1em 0;
+}
+
+.prose-imitatia strong { font-weight: 600; color: var(--ink); }
+.prose-imitatia em { font-style: italic; }
+
+.prose-imitatia h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 2.2em 0 0.8em;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.prose-imitatia h3 {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 500;
+  margin: 1.8em 0 0.6em;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.prose-imitatia h4 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.6em 0 0.5em;
+}
+
+.prose-imitatia a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color .2s;
+}
+.prose-imitatia a:hover {
+  color: var(--ink);
+  background: var(--chip);
+}
+
+.prose-imitatia blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.4em 0 0.4em 1.4em;
+  margin: 1.6em 0;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.15em;
+}
+.prose-imitatia blockquote p { margin: 0.4em 0; }
+
+.prose-imitatia ul, .prose-imitatia ol {
+  margin: 1.2em 0;
+  padding-left: 1.4em;
+}
+.prose-imitatia li { margin: 0.4em 0; }
+.prose-imitatia ul li::marker { color: var(--accent); }
+
+.prose-imitatia figure {
+  margin: 2em -0.5em;
+}
+.prose-imitatia figure img {
+  border-radius: 12px;
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 12px 40px -16px rgba(0,0,0,0.25);
+}
+.dark .prose-imitatia figure img {
+  box-shadow: 0 12px 40px -16px rgba(0,0,0,0.6);
+}
+.prose-imitatia figure.is-resized img {
+  margin-inline: auto;
+  max-width: 100%;
+}
+
+.prose-imitatia hr,
+.prose-imitatia .wp-block-separator {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  margin: 2.5em auto;
+  width: 60%;
+}
+
+.prose-imitatia .wp-block-button,
+.prose-imitatia .wp-block-buttons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.6em;
+  margin: 1.4em 0;
+}
+.prose-imitatia .wp-block-button__link {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: transform .15s ease, background .15s ease;
+}
+.prose-imitatia .wp-block-button__link:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+}
+
+.prose-imitatia .wp-block-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5em;
+  margin: 1.6em 0;
+}
+.prose-imitatia .wp-block-column > * { margin-top: 0.4em; margin-bottom: 0.4em; }
+
+/* Small caps utility for tasteful section dividers */
+.smallcaps {
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Animations
+   ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .stagger > * {
+    animation: fade-up 0.6s ease-out both;
+  }
+  .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.12s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.19s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.26s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.33s; }
+  .stagger > *:nth-child(6) { animation-delay: 0.40s; }
+}
+
+/* Decorative blossom motif used on hero etc */
+.blossom-mark {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: radial-gradient(circle at 30% 30%, var(--accent) 0%, var(--accent) 40%, transparent 42%);
+  border-radius: 50%;
+  vertical-align: -0.15em;
+  margin: 0 0.2em;
+}
+
+/* Nicer focus rings */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
