@@ -6,8 +6,15 @@ export default function Footer() {
     <footer className="border-t border-line/60 bg-paper/60 mt-32">
       <div className="mx-auto grid max-w-wide gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
         <div className="lg:col-span-2">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <span className="inline-block h-2.5 w-2.5 rounded-full bg-accent" />
+          <Link href="/" className="inline-flex items-center gap-2.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo.webp"
+              alt=""
+              width="28"
+              height="28"
+              className="h-6 w-6 object-contain dark:invert dark:brightness-95"
+            />
             <span className="font-display text-2xl text-ink">Imitatia</span>
           </Link>
           <p className="mt-4 max-w-md font-serif-body text-sm leading-relaxed text-muted">

@@ -18,8 +18,15 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-line/60 bg-paper/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-wide items-center justify-between px-6 py-4 lg:px-10">
-        <Link href="/" className="group flex items-center gap-2">
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-accent transition-transform group-hover:scale-110" />
+        <Link href="/" className="group flex items-center gap-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/logo.webp"
+            alt=""
+            width="32"
+            height="32"
+            className="h-7 w-7 object-contain transition-transform group-hover:-rotate-6 dark:invert dark:brightness-95"
+          />
           <span className="font-display text-2xl tracking-tight text-ink">
             Imitatia
           </span>
