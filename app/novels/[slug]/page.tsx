@@ -6,7 +6,9 @@ import { novels, chaptersForNovel, formatDate, decodeTitle, SITE } from "@/lib/c
 interface Params { slug: string }
 
 export function generateStaticParams(): Params[] {
-  return novels.map((n) => ({ slug: n.slug }));
+  return novels
+    .filter((n) => !n.externalLink && n.categorySlug)
+    .map((n) => ({ slug: n.slug }));
 }
 
 export async function generateMetadata(
@@ -38,7 +40,7 @@ export default async function NovelPage({
   const novel = novels.find((n) => n.slug === slug);
   if (!novel) notFound();
 
-  const chapters = chaptersForNovel(novel.categorySlug);
+  const chapters = novel.categorySlug ? chaptersForNovel(novel.categorySlug) : [];
 
   return (
     <div className="relative">

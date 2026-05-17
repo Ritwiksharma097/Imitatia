@@ -86,11 +86,14 @@ export function latestPosts(n: number, exclude: string[] = []): ContentItem[] {
 
 export interface NovelMeta {
   slug: string;
-  categorySlug: string;
+  /** When set, /novels/<slug>/ won't be auto-generated; the novel links to this page instead. */
+  externalLink?: string;
+  /** When set, chapters come from this WP category. When omitted, the novel has no chapter list. */
+  categorySlug?: string;
   title: string;
   blurb: string;
   cover: string | null;
-  status: "ongoing" | "complete" | "published";
+  status: "ongoing" | "complete" | "published" | "upcoming";
   badge?: string;
 }
 
@@ -112,6 +115,16 @@ export const novels: NovelMeta[] = [
     blurb:
       "A quiet, romantic novel set against blooming Japan. Joon arrives at Raviga and finds the city — and herself — in flux.",
     cover: "/images/2025/08/UTCB-slider1.webp",
+    status: "published",
+    badge: "Published",
+  },
+  {
+    slug: "canvas",
+    externalLink: "/canvas/",
+    title: "Canvas",
+    blurb:
+      "A medieval tale of love, betrayal, and vengeance set in the fictional kingdom of Eiralia. Published on Amazon Kindle.",
+    cover: "/images/2025/08/slider-canvas1.webp",
     status: "published",
     badge: "Published",
   },
@@ -158,9 +171,10 @@ export function chapterNeighbors(
   };
 }
 
-// Detects whether a post belongs to a novel and which one (returns categorySlug)
+// Detects whether a post belongs to a novel and which one
 export function novelOfPost(post: ContentItem): NovelMeta | null {
   for (const n of novels) {
+    if (!n.categorySlug) continue;
     if (post.categories.some((c) => c.slug === n.categorySlug)) return n;
   }
   return null;

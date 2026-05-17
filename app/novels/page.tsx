@@ -26,7 +26,8 @@ export default function NovelsIndex() {
 
       <ul className="mt-16 space-y-16">
         {novels.map((n, i) => {
-          const chs = chaptersForNovel(n.categorySlug);
+          const chs = n.categorySlug ? chaptersForNovel(n.categorySlug) : [];
+          const target = n.externalLink ?? `/novels/${n.slug}/`;
           const reverse = i % 2 === 1;
           return (
             <li key={n.slug}>
@@ -36,7 +37,7 @@ export default function NovelsIndex() {
                 }`}
               >
                 <Link
-                  href={`/novels/${n.slug}/`}
+                  href={target}
                   className="group relative lg:col-span-5 [direction:ltr]"
                 >
                   <div className="overflow-hidden rounded-2xl border border-line/60 shadow-[0_25px_60px_-25px_rgba(0,0,0,0.4)] dark:shadow-[0_25px_60px_-25px_rgba(0,0,0,0.7)]">
@@ -55,9 +56,11 @@ export default function NovelsIndex() {
                 <div className="lg:col-span-7 [direction:ltr]">
                   <div className="flex items-center gap-3">
                     <span className="smallcaps text-xs text-accent">{n.badge}</span>
-                    <span className="text-xs text-muted">
-                      · {chs.length} chapter{chs.length === 1 ? "" : "s"}
-                    </span>
+                    {n.categorySlug && (
+                      <span className="text-xs text-muted">
+                        · {chs.length} chapter{chs.length === 1 ? "" : "s"}
+                      </span>
+                    )}
                     <span className="text-xs text-muted">
                       · {n.status}
                     </span>
@@ -70,10 +73,10 @@ export default function NovelsIndex() {
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
                     <Link
-                      href={`/novels/${n.slug}/`}
+                      href={target}
                       className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 font-sans text-sm font-medium text-paper transition hover:-translate-y-0.5 hover:bg-accent"
                     >
-                      Explore
+                      {n.externalLink ? "View" : "Explore"}
                     </Link>
                     {chs[0] && (
                       <Link

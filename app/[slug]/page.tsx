@@ -19,7 +19,7 @@ import PostCard from "@/components/PostCard";
 
 // Slugs reserved by other routes — these must NOT be served as posts.
 const RESERVED = new Set([
-  "blog", "novels", "reviews", "games", "about", "category",
+  "blog", "novels", "reviews", "games", "about", "portfolio", "category",
   "feed.xml", "sitemap.xml", "robots.txt",
 ]);
 
@@ -28,13 +28,20 @@ interface Params { slug: string }
 export function generateStaticParams(): Params[] {
   const ids: Params[] = [];
   for (const p of allPosts) ids.push({ slug: p.slug });
-  // Only include pages that we WANT at top-level. We exclude pages that
-  // have their own dedicated routes (about, home, portfolio, etc.).
+  // Pages excluded because they have dedicated routes elsewhere:
+  //   home -> custom hero on /
+  //   nin-nin, about -> /about/
+  //   portfolio -> /portfolio/
+  //   imitatia-studios -> /games/
+  //   imitatia-posts -> /blog/
+  //   novels-by-nin-nin -> /novels/
+  //   audrey/utcb/coincidence-or-jeanie -> /novels/<slug>/
+  //   friends-review-... -> intentionally hidden (draft per author request)
   const pageBlacklist = new Set([
     "home", "about", "portfolio", "nin-nin",
     "imitatia-studios", "imitatia-posts", "novels-by-nin-nin",
     "audrey", "under-the-cherry-blossoms", "coincidence-or-jeanie",
-    // these become novel landing pages
+    "friends-review-the-one-where-ross-sucks",
   ]);
   for (const p of allPages) {
     if (pageBlacklist.has(p.slug)) continue;
@@ -138,66 +145,64 @@ export default async function PostPage({
         />
       )}
 
-      {/* HERO */}
-      <header className="relative">
-        {item.featuredImage && (
-          <div className="relative h-[55vh] min-h-[420px] w-full overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={item.featuredImage}
-              alt=""
-              className="h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-paper/0 via-paper/30 to-paper" />
-          </div>
+      {/* HERO — editorial layout, title above image, no overlap */}
+      <header className="mx-auto max-w-3xl px-6 pt-16 lg:px-0 lg:pt-24">
+        <div className="flex flex-wrap items-center gap-3 text-xs">
+          {primaryCat && (
+            <Link
+              href={`/category/${primaryCat.slug}/`}
+              className="smallcaps rounded-full border border-line/80 bg-paper-deep/50 px-3 py-1 text-accent"
+            >
+              {primaryCat.name}
+            </Link>
+          )}
+          {novel && (
+            <Link
+              href={`/novels/${novel.slug}/`}
+              className="smallcaps rounded-full border border-line/80 bg-paper-deep/50 px-3 py-1 text-ink/80"
+            >
+              from {novel.title}
+            </Link>
+          )}
+        </div>
+
+        <h1 className="font-display mt-5 text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl headline-balance">
+          {decode(item.title)}
+        </h1>
+
+        {item.excerpt && (
+          <p className="mt-5 font-serif-body text-xl leading-relaxed text-ink-soft italic">
+            {plainText(item.excerpt, 220)}
+          </p>
         )}
 
-        <div
-          className={
-            item.featuredImage
-              ? "relative mx-auto -mt-32 max-w-3xl px-6 pb-10 lg:-mt-44 lg:px-0"
-              : "mx-auto max-w-3xl px-6 pb-10 pt-16 lg:px-0 lg:pt-24"
-          }
-        >
-          <div className="flex flex-wrap items-center gap-3 text-xs">
-            {primaryCat && (
-              <Link
-                href={`/category/${primaryCat.slug}/`}
-                className="smallcaps rounded-full border border-line/80 bg-paper/80 px-3 py-1 text-accent backdrop-blur"
-              >
-                {primaryCat.name}
-              </Link>
-            )}
-            {novel && (
-              <Link
-                href={`/novels/${novel.slug}/`}
-                className="smallcaps rounded-full border border-line/80 bg-paper/80 px-3 py-1 text-ink/80 backdrop-blur"
-              >
-                from {novel.title}
-              </Link>
-            )}
-          </div>
-
-          <h1 className="font-display mt-5 text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl headline-balance">
-            {decode(item.title)}
-          </h1>
-
-          <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-muted">
-            <span>By {item.author}</span>
-            <span aria-hidden>·</span>
-            <span>{formatDate(item.date)}</span>
-            {isPost && (
-              <>
-                <span aria-hidden>·</span>
-                <span>{readingTime(item.content)} min read</span>
-              </>
-            )}
-          </div>
+        <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-muted">
+          <span>By {item.author}</span>
+          <span aria-hidden>·</span>
+          <span>{formatDate(item.date)}</span>
+          {isPost && (
+            <>
+              <span aria-hidden>·</span>
+              <span>{readingTime(item.content)} min read</span>
+            </>
+          )}
         </div>
       </header>
 
+      {/* FEATURED IMAGE — clean card, no overlap, no awkward crop */}
+      {item.featuredImage && (
+        <figure className="mx-auto mt-10 max-w-4xl px-6 lg:mt-14 lg:px-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={item.featuredImage}
+            alt=""
+            className="mx-auto max-h-[70vh] w-auto rounded-2xl object-contain shadow-[0_20px_60px_-25px_rgba(0,0,0,0.35)] dark:shadow-[0_20px_60px_-25px_rgba(0,0,0,0.7)]"
+          />
+        </figure>
+      )}
+
       {/* CONTENT */}
-      <div className="mx-auto max-w-3xl px-6 pb-20 lg:px-0">
+      <div className="mx-auto mt-12 max-w-3xl px-6 pb-20 lg:mt-16 lg:px-0">
         <PostContent item={item} />
       </div>
 

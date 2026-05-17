@@ -20,7 +20,22 @@ interface Props {
  * We split the content on the marker comment boundaries and interleave React.
  */
 export function PostContent({ item }: Props) {
-  const segments = splitOnMarkers(item.content);
+  // If the post body starts with a <figure> whose image is the same URL as the
+  // featured image (we now display the featured image in the hero, so showing
+  // it again right at the top of the body is a duplicate).
+  let html = item.content;
+  if (item.featuredImage) {
+    const featBase = stripSizeAndQuery(item.featuredImage);
+    // Match leading <figure ...>...<img src="X"... /></figure> possibly followed by whitespace
+    const leading = html.match(/^\s*<figure[^>]*>[\s\S]*?<img[^>]*\bsrc="([^"]+)"[\s\S]*?<\/figure>\s*/i);
+    if (leading) {
+      const imgBase = stripSizeAndQuery(leading[1]);
+      if (imgBase === featBase || imgBase.endsWith(featBase) || featBase.endsWith(imgBase)) {
+        html = html.slice(leading[0].length);
+      }
+    }
+  }
+  const segments = splitOnMarkers(html);
 
   return (
     <div className="prose-imitatia prose-imitatia-root">
@@ -156,4 +171,9 @@ function ReadNowBlock({ categorySlug }: { categorySlug: string }) {
 
 function cleanTitle(t: string): string {
   return decodeTitle(t);
+}
+
+// Normalize a URL for comparison: drop query strings and WP size suffixes like -1024x768
+function stripSizeAndQuery(u: string): string {
+  return u.split("?")[0].replace(/-\d+x\d+(?=\.[a-zA-Z]+$)/, "");
 }

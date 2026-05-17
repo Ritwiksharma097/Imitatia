@@ -25,7 +25,7 @@ function pickFeatured() {
 export default function Home() {
   const featured = pickFeatured();
   const recent = latestPosts(6, [featured.slug]);
-  const dreams = postsInCategory("imitatia-dreams").slice(0, 4);
+  const dreams = postsInCategory("imitatia-dreams").slice(0, 6);
   const reviews = postsInCategory("imitatia-reviews").slice(0, 3);
 
   return (
@@ -118,13 +118,14 @@ export default function Home() {
           </Link>
         </div>
 
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {novels.map((n) => {
-            const chCount = chaptersForNovel(n.categorySlug).length;
+            const chCount = n.categorySlug ? chaptersForNovel(n.categorySlug).length : 0;
+            const target = n.externalLink ?? `/novels/${n.slug}/`;
             return (
               <li key={n.slug}>
                 <Link
-                  href={`/novels/${n.slug}/`}
+                  href={target}
                   className="group block overflow-hidden rounded-2xl border border-line/60 bg-paper-deep/30 transition hover:-translate-y-1 hover:border-accent/60"
                 >
                   <div className="aspect-[3/4] overflow-hidden">
@@ -140,7 +141,7 @@ export default function Home() {
                   <div className="p-5">
                     <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-muted">
                       <span>{n.badge}</span>
-                      <span>{chCount} ch.</span>
+                      <span>{chCount > 0 ? `${chCount} ch.` : n.status}</span>
                     </div>
                     <h3 className="font-display mt-2 text-2xl leading-tight text-ink group-hover:text-accent">
                       {n.title}
@@ -178,10 +179,10 @@ export default function Home() {
             </p>
           </div>
 
-          <ul className="mt-14 grid gap-6 md:grid-cols-2">
-            {dreams.map((p, i) => (
-              <li key={p.slug} className={i === 0 ? "md:row-span-2" : ""}>
-                <PostCard post={p} variant={i === 0 ? "feature" : "default"} />
+          <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {dreams.map((p) => (
+              <li key={p.slug}>
+                <PostCard post={p} />
               </li>
             ))}
           </ul>

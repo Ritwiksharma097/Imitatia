@@ -4,10 +4,12 @@ import { allPosts, allPages, novels, allCategories, SITE } from "@/lib/content";
 export const dynamic = "force-static";
 
 // Pages routed under our top-level [slug] that we DON'T want indexed as pages
+// Keep this in sync with the page blacklist in app/[slug]/page.tsx
 const PAGE_BLACKLIST = new Set([
   "home", "about", "portfolio", "nin-nin", "imitatia-studios",
   "imitatia-posts", "novels-by-nin-nin",
   "audrey", "under-the-cherry-blossoms", "coincidence-or-jeanie",
+  "friends-review-the-one-where-ross-sucks",
 ]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -20,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/novels/",
     "/reviews/",
     "/games/",
+    "/portfolio/",
     "/about/",
   ].map((p) => ({
     url: `${base}${p}`,

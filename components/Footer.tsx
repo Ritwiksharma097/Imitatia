@@ -13,7 +13,15 @@ export default function Footer() {
               alt=""
               width="28"
               height="28"
-              className="h-6 w-6 object-contain dark:invert dark:brightness-95"
+              className="block h-7 w-7 object-contain dark:hidden"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo-dark.webp"
+              alt=""
+              width="28"
+              height="28"
+              className="hidden h-7 w-7 object-contain dark:block"
             />
             <span className="font-display text-2xl text-ink">Imitatia</span>
           </Link>
@@ -30,6 +38,7 @@ export default function Footer() {
             <li><Link href="/blog/" className="text-ink/85 hover:text-accent">Blog</Link></li>
             <li><Link href="/reviews/" className="text-ink/85 hover:text-accent">Reviews</Link></li>
             <li><Link href="/games/" className="text-ink/85 hover:text-accent">Games</Link></li>
+            <li><Link href="/portfolio/" className="text-ink/85 hover:text-accent">Portfolio</Link></li>
           </ul>
         </div>
 
