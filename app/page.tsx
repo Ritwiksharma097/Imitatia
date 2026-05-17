@@ -38,7 +38,7 @@ export default function Home() {
               <p className="smallcaps text-sm text-accent">
                 <span className="blossom-mark" /> A quiet space for stories
               </p>
-              <h1 className="font-display mt-5 text-6xl leading-[0.95] tracking-tight text-ink sm:text-7xl lg:text-8xl headline-balance">
+              <h1 className="font-display mt-5 text-5xl leading-[0.95] tracking-tight text-ink sm:text-6xl md:text-7xl lg:text-8xl headline-balance">
                 Stories that <em className="text-accent font-display">remember</em> you back.
               </h1>
               <p className="mt-7 max-w-xl font-serif-body text-xl leading-relaxed text-ink-soft">
@@ -67,7 +67,7 @@ export default function Home() {
             {/* Vertical "magazine cover" of latest post */}
             <Link
               href={`/${featured.slug}/`}
-              className="group relative col-span-full mt-6 self-center lg:col-span-5 lg:mt-0"
+              className="group relative col-span-full mx-auto mt-6 w-full max-w-sm self-center sm:max-w-md lg:col-span-5 lg:mt-0 lg:max-w-none"
             >
               <div className="relative overflow-hidden rounded-[28px] border border-line/60 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.35)] dark:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)]">
                 <div className="aspect-[3/4] w-full overflow-hidden">
@@ -121,11 +121,10 @@ export default function Home() {
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {novels.map((n) => {
             const chCount = n.categorySlug ? chaptersForNovel(n.categorySlug).length : 0;
-            const target = n.externalLink ?? `/novels/${n.slug}/`;
             return (
               <li key={n.slug}>
                 <Link
-                  href={target}
+                  href={`/novels/${n.slug}/`}
                   className="group block overflow-hidden rounded-2xl border border-line/60 bg-paper-deep/30 transition hover:-translate-y-1 hover:border-accent/60"
                 >
                   <div className="aspect-[3/4] overflow-hidden">

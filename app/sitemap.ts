@@ -9,6 +9,7 @@ const PAGE_BLACKLIST = new Set([
   "home", "about", "portfolio", "nin-nin", "imitatia-studios",
   "imitatia-posts", "novels-by-nin-nin",
   "audrey", "under-the-cherry-blossoms", "coincidence-or-jeanie",
+  "canvas", "the-infection-part-one-angelas-story",
   "friends-review-the-one-where-ross-sucks",
 ]);
 

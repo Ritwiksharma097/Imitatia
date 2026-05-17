@@ -86,24 +86,42 @@ export function latestPosts(n: number, exclude: string[] = []): ContentItem[] {
 
 export interface NovelMeta {
   slug: string;
-  /** When set, /novels/<slug>/ won't be auto-generated; the novel links to this page instead. */
+  /** When set, /novels/<slug>/ won't be auto-generated; clicking the novel links here instead. */
   externalLink?: string;
   /** When set, chapters come from this WP category. When omitted, the novel has no chapter list. */
   categorySlug?: string;
+  /** When set, this novel's landing page pulls long-form description from this WP page slug. */
+  descriptionPageSlug?: string;
   title: string;
+  /** One-line blurb shown on cards and indexes. */
   blurb: string;
+  /** Longer 1-2 sentence pitch shown at the top of the landing page. */
+  pitch?: string;
   cover: string | null;
   status: "ongoing" | "complete" | "published" | "upcoming";
   badge?: string;
+  /** For published novels only — purchase/read links. */
+  purchaseLinks?: { label: string; url: string }[];
+  /** Publication metadata for published novels. */
+  publication?: {
+    publisher?: string;
+    releaseDate?: string;
+    pages?: string;
+    isbn?: string;
+    asin?: string;
+  };
 }
 
 export const novels: NovelMeta[] = [
   {
     slug: "audrey",
     categorySlug: "audrey",
+    descriptionPageSlug: "audrey",
     title: "Audrey",
     blurb:
-      "A slow-burning web novel about regret, second chances, and the choices that follow us home. Released chapter by chapter.",
+      "A slow-burn web novel about a small-town bartender, a stranger she shouldn't trust, and the careful life she's been living unraveling around her.",
+    pitch:
+      "In Ashford Hollow, the nights are long and the gossip never sleeps. Audrey pours whiskey for the same regulars every night — until a stranger walks in and her small-town routine starts to shift.",
     cover: "/images/2025/08/Audre-image.webp",
     status: "ongoing",
     badge: "Web Novel",
@@ -111,29 +129,55 @@ export const novels: NovelMeta[] = [
   {
     slug: "under-the-cherry-blossoms",
     categorySlug: "utcb",
+    descriptionPageSlug: "under-the-cherry-blossoms",
     title: "Under The Cherry Blossoms",
     blurb:
-      "A quiet, romantic novel set against blooming Japan. Joon arrives at Raviga and finds the city — and herself — in flux.",
-    cover: "/images/2025/08/UTCB-slider1.webp",
+      "A story of love, healing, and the quiet power of connection — told beneath the falling petals of a new beginning.",
+    pitch:
+      "Lily Andrews steps into her first job at Mystique Holdings in Los Angeles, and finds herself drawn to her boss — a man marked by a past he can't seem to let go of.",
+    cover: "/images/2025/07/DALL.E-2024-04-16-13.33.35-A-picturesque-scene-of-a-river-flowing-gently-beneath-cherry-blossom-trees-in-full-bloom.-The-setting-is-serene-and-idyllic-reminiscent-of-a-calm-spr.webp",
     status: "published",
     badge: "Published",
+    purchaseLinks: [
+      {
+        label: "Buy on Amazon Kindle",
+        url: "https://www.amazon.com/dp/B0CXKK83LZ",
+      },
+    ],
+    publication: {
+      publisher: "Amazon Kindle",
+      releaseDate: "April 13, 2024",
+      pages: "347",
+      isbn: "9798322913917",
+      asin: "B0CXKK83LZ",
+    },
   },
   {
     slug: "canvas",
-    externalLink: "/canvas/",
+    categorySlug: undefined,
+    descriptionPageSlug: "canvas",
     title: "Canvas",
     blurb:
-      "A medieval tale of love, betrayal, and vengeance set in the fictional kingdom of Eiralia. Published on Amazon Kindle.",
+      "A medieval tale of love, betrayal, and vengeance set in the fictional kingdom of Eiralia — where cherry blossoms witness both love and loss.",
+    pitch:
+      "A story carried in mind for years. At its heart, it is simple, yet it carries the weight of love, betrayal, and vengeance.",
     cover: "/images/2025/08/slider-canvas1.webp",
     status: "published",
     badge: "Published",
+    publication: {
+      publisher: "Amazon Kindle",
+      releaseDate: "October 2025",
+    },
   },
   {
     slug: "coincidence-or-jeanie",
     categorySlug: "coincidence-or-jeanie",
+    descriptionPageSlug: "coincidence-or-jeanie",
     title: "Coincidence or Jeanie?",
     blurb:
-      "When intuition keeps proving itself, you stop calling it coincidence. A mystery that whispers before it shouts.",
+      "Some call it intuition. Nick doesn't call it anything — he just notices. A mystery that whispers before it shouts.",
+    pitch:
+      "Seventeen-year-old Nick Clement has just settled into life in Pacifica. Lately, his 'gut feelings' keep lining up with real events — and one of them points toward a girl he hasn't even met yet.",
     cover: "/images/2025/08/Coincidence-jeanie1.webp",
     status: "ongoing",
     badge: "Web Novel",
@@ -141,9 +185,12 @@ export const novels: NovelMeta[] = [
   {
     slug: "the-infection",
     categorySlug: "infection",
+    descriptionPageSlug: "the-infection-part-one-angelas-story",
     title: "The Infection",
     blurb:
-      "It started at a party. Or maybe it always was. Angela's story — told piece by uneasy piece.",
+      "A character-driven sci-fi horror about a mother who will cross a sealed neighborhood to reach her daughter.",
+    pitch:
+      "Green light splits the sky and reality changes. Inside the Barrier, nights glow, rules bend, and kindness can be the difference between turning and surviving. This is Angela's story.",
     cover: "/images/2025/10/concept-art1.webp",
     status: "ongoing",
     badge: "Web Novel",

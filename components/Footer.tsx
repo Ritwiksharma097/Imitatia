@@ -51,7 +51,19 @@ export default function Footer() {
               </a>
             </li>
             <li><Link href="/about/" className="text-ink/85 hover:text-accent">About Nin Nin</Link></li>
-            <li><Link href="/feed.xml" className="text-ink/85 hover:text-accent">RSS</Link></li>
+            <li>
+              <a
+                href="/feed.xml"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-ink/85 hover:text-accent"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                  <path d="M4 4v3c8.3 0 15 6.7 15 15h3C22 12.1 13.9 4 4 4zm0 6v3c4.97 0 9 4.03 9 9h3c0-6.6-5.4-12-12-12zm2.5 8.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                </svg>
+                RSS feed
+              </a>
+            </li>
           </ul>
         </div>
       </div>

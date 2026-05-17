@@ -22,7 +22,7 @@ export default function AboutPage() {
       {/* Hero */}
       <header className="mx-auto max-w-3xl px-6 pb-12 pt-20 lg:px-0 lg:pt-28">
         <p className="smallcaps text-sm text-accent">About</p>
-        <h1 className="font-display mt-4 text-5xl leading-[1.0] tracking-tight text-ink lg:text-7xl headline-balance">
+        <h1 className="font-display mt-4 text-5xl leading-[1.0] tracking-tight text-ink sm:text-6xl lg:text-7xl headline-balance">
           Nin Nin
         </h1>
         <p className="font-display mt-4 text-2xl italic text-ink-soft lg:text-3xl">

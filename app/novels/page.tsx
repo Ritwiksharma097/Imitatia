@@ -27,7 +27,7 @@ export default function NovelsIndex() {
       <ul className="mt-16 space-y-16">
         {novels.map((n, i) => {
           const chs = n.categorySlug ? chaptersForNovel(n.categorySlug) : [];
-          const target = n.externalLink ?? `/novels/${n.slug}/`;
+          const target = `/novels/${n.slug}/`;
           const reverse = i % 2 === 1;
           return (
             <li key={n.slug}>
@@ -54,9 +54,9 @@ export default function NovelsIndex() {
                   </div>
                 </Link>
                 <div className="lg:col-span-7 [direction:ltr]">
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <span className="smallcaps text-xs text-accent">{n.badge}</span>
-                    {n.categorySlug && (
+                    {n.categorySlug && chs.length > 0 && (
                       <span className="text-xs text-muted">
                         · {chs.length} chapter{chs.length === 1 ? "" : "s"}
                       </span>
@@ -76,7 +76,7 @@ export default function NovelsIndex() {
                       href={target}
                       className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 font-sans text-sm font-medium text-paper transition hover:-translate-y-0.5 hover:bg-accent"
                     >
-                      {n.externalLink ? "View" : "Explore"}
+                      Explore
                     </Link>
                     {chs[0] && (
                       <Link

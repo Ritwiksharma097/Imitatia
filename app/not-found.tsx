@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-6 py-24 text-center">
       <p className="smallcaps text-sm text-accent">404</p>
-      <h1 className="font-display mt-3 text-6xl leading-[1.0] tracking-tight text-ink lg:text-8xl headline-balance">
+      <h1 className="font-display mt-3 text-5xl leading-[1.0] tracking-tight text-ink sm:text-6xl lg:text-8xl headline-balance">
         This page has wandered off.
       </h1>
       <p className="mt-6 font-serif-body text-xl text-ink-soft">
