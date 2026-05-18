@@ -3,6 +3,10 @@
 Personal storytelling space by Nin Nin. Rebuilt from WordPress as a static
 Next.js 15 site, deployed on Cloudflare Pages with zero hosting cost.
 
+> **Adding a new post?** See [AUTHORING.md](./AUTHORING.md). It covers
+> everything: helper scripts, JSON schema, how to add chapters, image
+> optimization, and how AI assistants can help.
+
 ---
 
 ## Quick start
